@@ -4,6 +4,7 @@ var signatureInfoCtl = require('../controllers/signatrueInfo.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  consoel.log(11)
   res.render('index', { title: 'Express'});
 });
 
