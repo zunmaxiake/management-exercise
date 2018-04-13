@@ -1,0 +1,39 @@
+li{
+    list-style: none;
+}
+.message{
+    margin-left: 30px;
+}
+.message li{
+    padding: 5px 0;
+    font-size: 15px;
+    cursor: default;
+}
+.message li .do,.message li .wrong{
+    color: red;
+    font-size: 15px;
+    cursor: pointer;
+}
+li{
+    list-style: none;
+}
+
+.message li a{
+    /*text-decoration: none;*/
+    color: #000000;
+}
+.ui-state-default{
+    background-color: #ffffff;
+}
+
+
+.ui-state-default .ui-icon{
+    background-image: url("images/ui-icons_888888_256x240.png");
+}
+.name span{
+    margin: 0 10px 10px 10px;
+    display: inline-block;
+}
+.name h4{
+    width: 350px;
+}
