@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var signatureInfoCtl = require('../controllers/signatrueInfo.js');
+var signatureInfoCtl = require('../controllers/users.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  consoel.log(11)
-  res.render('index', { title: 'Express'});
+  res.redirect("users");
 });
 
 // router.get('/signatureInfo', function(req, res, next) {

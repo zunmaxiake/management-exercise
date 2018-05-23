@@ -10,14 +10,21 @@ var ejs = require('ejs');
 
 var Promise = require('bluebird');
 var CONFIG = require("./config/CONFIG")
-var mongoose = require('mongoose');
-Promise.promisifyAll(mongoose);
+// var mongoose = require('mongoose');
+// Promise.promisifyAll(mongoose);
 
-var uri = CONFIG.MONGOOSE.URI;
-var mongoOptions = CONFIG.MONGOOSE.OPTION;
-mongoose.Promise = require('bluebird');
-global.db = mongoose.createConnection(uri,mongoOptions);
-mongoose.connection = global.db;
+// var uri = CONFIG.MONGOOSE.URI;
+// var mongoOptions = CONFIG.MONGOOSE.OPTION;
+// mongoose.Promise = require('bluebird');
+// global.db = mongoose.createConnection(uri,mongoOptions);
+// mongoose.connection = global.db;
+var Sequelize = require('sequelize');
+var tedious = require('tedious');
+var dataBase = CONFIG.SQLSERVER.dataBase;
+var userName = CONFIG.SQLSERVER.userName;
+var password = CONFIG.SQLSERVER.pwd;
+var baseConfig = CONFIG.SQLSERVER.baseConfig;
+global.sequelize = new Sequelize(dataBase,userName,password,baseConfig);
 
 // db.on("open",function(){
 //   console.log("dbopen")
@@ -26,11 +33,13 @@ mongoose.connection = global.db;
 var app = express();
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var signatureInfo = require('./routes/signatureInfo');
+var member = require('./routes/member');
 var template = require('./routes/template');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
+app.engine('.ejs',ejs.__express);
+app.set('view engine','ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -39,12 +48,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.engine('.html',ejs.__express);
-app.set('view engine','html');
+
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/signatureInfo', signatureInfo);
+app.use('/member',member);
 app.use('/template', template);
 
 // catch 404 and forward to error handler

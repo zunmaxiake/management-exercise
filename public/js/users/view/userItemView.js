@@ -2,14 +2,14 @@ _.templateSettings = {
     interpolate: /\{\{(.+?)\}\}/g
 };
 
-var signatureInfoItemView = Backbone.View.extend({
-    //itemTemplate: _.template($("#item-template").html()),
+var userItemView = Backbone.View.extend({
     tagName: "tr",
     events: {
-
+        "click .deleteUser":"deleteUser",
+        "mouseenter":"addBackcolor",
+        "mouseleave":"removeBackcolor"
     },
     initialize: function () {
-        //this.listenTo(this.collection, "all", this.render);
         var that = this;
         this.getTrTmp()
         .then(function(){
@@ -17,6 +17,7 @@ var signatureInfoItemView = Backbone.View.extend({
         })
     },
     render: function (data) {
+        console.log("data:",data)
         this.$el.append(this.trTemplate(data.attributes));
     },
     getData: function (url) {
@@ -31,11 +32,23 @@ var signatureInfoItemView = Backbone.View.extend({
         var def = $.Deferred();
         var promise = def.promise();
         var self = this;
-        this.getData("/template/getting/getSignatureInfoTr")
-        .then(function (data) {
+        this.getData("/template/getting/getUserTr")
+        .then(function (data) {        
             self.trTemplate = _.template(data);
             return def.resolve()
         })
         return promise;
+    },
+    deleteUser:function(){
+        if(confirm("确认删除该用户吗？")){
+            this.model.destroy();
+            this.collection.trigger('remove');
+        }
+    },
+    addBackcolor:function(){
+        this.$el.css({"background-color":"#eee"});
+    },
+    removeBackcolor:function(){
+        this.$el.css({"background-color":""});
     }
 })

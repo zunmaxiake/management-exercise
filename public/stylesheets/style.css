@@ -554,3 +554,11 @@ a.tabMeeting:hover{
     clear: both;
     cursor: pointer;
 }
+
+.middleContent{
+    left:14%;top:86px;margin-left:8px;
+}
+
+.pagePosition{
+    font-size:13px;text-align:right;
+}
